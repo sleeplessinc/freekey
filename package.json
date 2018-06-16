@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/sleeplessinc/freekey/issues"
   },
-  "homepage": "https://github.com/sleeplessinc/freekey#readme"
+  "homepage": "https://github.com/sleeplessinc/freekey#readme",
+  "dependencies": {
+    "aws-sdk": "^2.259.1"
+  }
 }

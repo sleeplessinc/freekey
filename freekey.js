@@ -19,7 +19,7 @@ function get(key, cb){
 		} else {
 			val = err;
 		}
-		cb(val, error, res);
+		cb(j2o(val), error, res);
 	});	
 }
 

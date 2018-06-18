@@ -16,9 +16,11 @@ var good = 0;
 
 fk.set("test_object", obj, () => {
 	fk.get("test_object", (value, error, res) => {
-		// Should be true
+		// Should be false (not failed)
 		tests.get = !error ? true : false;
-		tests.set = (value == o2j(obj)) ? true : false; 
+		// Should be false (not failed)
+		tests.set = (o2j(value) === o2j(obj)) ? true : false; 
+		tests.isTheAnswer = value.num == 42 ? true : false;
 		fk.del("test_object", () => {
 			fk.get("test_object", (value, error, res) => {
 				// Should be null, after delete
@@ -40,6 +42,6 @@ if(fails > 0) {
 	console.log("Failed Tests: " + fails);
 	console.log(tests);
 } else {
-	console.log("Success");
+	console.log("The test appeared to be successful");
 }
 

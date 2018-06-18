@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "nodemon fkpc.js"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -16,10 +16,8 @@
     "url": "https://github.com/sleeplessinc/freekey/issues"
   },
   "homepage": "https://github.com/sleeplessinc/freekey#readme",
-  "devDependencies": {
-    "express": "^4.16.3",
-    "node-fetch": "^2.1.2",
-    "nodemon": "^1.17.5",
+  "dependencies": {
+    "https-post": "^0.1.1",
     "sleepless": "^2.6.0"
   }
 }

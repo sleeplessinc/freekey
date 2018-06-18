@@ -23,7 +23,7 @@ function get(key, cb){
 	});	
 }
 
-function set(key, val, cb){
+function put(key, val, cb){
 	// CALL URL SET
 	let url = "https://sleepless.com/api/v1/freekey/";
 	request.post({url: url, form: { action: "put", key: key, value: o2j(val)} }, (err) => { cb(err) }); 
@@ -42,7 +42,7 @@ function del(key, cb){
 
 module.exports = {
 	get: get,
-	set: set,
+	put: put,
 	del: del
 }
 

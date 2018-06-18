@@ -10,16 +10,16 @@ obj.arr = [1,2,"3"];
 obj.sub = {hello: "world"};
 obj.str = "let's get freeky";
 
-var tests = {get: false, set: false, del: false}
+var tests = {get: false, put: false, del: false}
 var fails = 0;
 var good = 0;
 
-fk.set("test_object", obj, () => {
+fk.put("test_object", obj, () => {
 	fk.get("test_object", (value, error, res) => {
 		// Should be false (not failed)
 		tests.get = !error ? true : false;
 		// Should be false (not failed)
-		tests.set = (o2j(value) === o2j(obj)) ? true : false; 
+		tests.put = (o2j(value) === o2j(obj)) ? true : false; 
 		tests.isTheAnswer = value.num === 42 ? true : false;
 		fk.del("test_object", () => {
 			fk.get("test_object", (value, error, res) => {

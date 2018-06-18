@@ -16,9 +16,10 @@ var good = 0;
 
 fk.set("test_object", obj, () => {
 	fk.get("test_object", (value, error, res) => {
-		// Should be true
+		// Should be false
 		tests.get = !error ? true : false;
-		tests.set = (value == o2j(obj)) ? true : false; 
+		// Should be false
+		tests.set = (o2j(value) == o2j(obj)) ? true : false; 
 		fk.del("test_object", () => {
 			fk.get("test_object", (value, error, res) => {
 				// Should be null, after delete

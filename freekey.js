@@ -11,13 +11,15 @@ function get(key, cb){
 	let url = "https://sleepless.com/api/v1/freekey/";
 	request.post({url: url, form: { action: "get", key: key, }}, function(err, res, body) {
 		var val = "";
+		var error = "";
 		if(!err && body) {
 			body = j2o(body);
-			val = body.error == null ? body.value : body.error;
+			val = body.value;
+			error = body.error;
 		} else {
 			val = err;
 		}
-		cb(val, res);
+		cb(val, error, res);
 	});	
 }
 

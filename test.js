@@ -24,7 +24,7 @@ fk.set("test_object", obj, () => {
 		fk.del("test_object", () => {
 			fk.get("test_object", (value, error, res) => {
 				// Should be null, after delete
-				tests.del = (value == null) ? true : false;
+				tests.del = (value === null) ? true : false;
 			})
 		});
 	})

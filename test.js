@@ -20,7 +20,7 @@ fk.set("test_object", obj, () => {
 		tests.get = !error ? true : false;
 		// Should be false (not failed)
 		tests.set = (o2j(value) === o2j(obj)) ? true : false; 
-		tests.isTheAnswer = value.num == 42 ? true : false;
+		tests.isTheAnswer = value.num === 42 ? true : false;
 		fk.del("test_object", () => {
 			fk.get("test_object", (value, error, res) => {
 				// Should be null, after delete

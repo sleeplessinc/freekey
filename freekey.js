@@ -1,25 +1,55 @@
 // FREEKEY
 // FREE KEY STORAGE INTERFACE
 
-const sleepless = require('sleepless');
+const sleepless = require('sleepless'),
+	https = require('http');
+	https.post = require('https-post');
 
-// RETURNS JSON OBJECT
-function get(key){
+
+function FreeKey(key){
+	get(key, res => {
+		return res.value;
+	});
+}
+
+function get(key, cb){
 	// Call URL GET
+	let url = "https://sleepless.com/api/v1/freekey/";
+	https.post(url, { action: "get", key: key, }, function(r) {
+		r.setEncoding('utf8');
+		r.on('data', chunk => {
+			if(chunk.value !== undefined) {
+				chunk.value = j2o(r.value);
+			}
+			cb(chunk);
+		});
+	});	
 }
 
-// RETURNS STATUS
-function set(key, val){
+function set(key, val, cb){
 	// CALL URL SET
+	let url = "https://sleepless.com/api/v1/freekey/";
+	https.post(url, { action: "put", key: key, value: o2j(val)}, cb); 
 }
 
-// RETURNS STATUS
-function del(key){
+function del(key, cb){
 	// CALL URL DEL
+	let url = "https://sleepless.com/api/v1/freekey/";
+	https.post(url, { action: "delete", key: key}, (r) => {
+		r.setEncoding('utf8');	
+		r.on('data', chunk => {
+			if(chunk.value !== undefined) {
+				chunk.value = j2o(r.value);
+			}
+			cb(key, chunk);
+		});
+	}); 
 }
 
 module.exports = {
-	get: get(),
-	set: set(),
-	del: del()
+	init: FreeKey,
+	get: get,
+	set: set,
+	del: del
 }
+

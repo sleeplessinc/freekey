@@ -11,7 +11,7 @@ This is just for testing your app/site and should not be used ina production set
 	fk.get('carsthatilike', (value) => { log(value) };
 
 	// Set a key
-	fk.set("hello", "world", () => { console.log("ALL DONE") );
+	fk.put("hello", "world", () => { console.log("ALL DONE") );
 
 	// Delete a key
 	// Simply returns the deleted key name that was passed in

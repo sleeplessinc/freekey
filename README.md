@@ -3,25 +3,16 @@ A free simple way to store JSON in a remote DB.
 ## Notes
 DO NOT USE IN PRODUCTION
 This is just for testing your app/site and should not be used ina production setting.
-## Example | node test.js
-	var fk = require('freekey');
+## FREEKEY IN TEN LINES
+	const fk = require('freekey');
 
-	// Quick set variable to value from key
-	var cars = fk.init('cars');
+	// Get a key
+	// Callback contains optional res object which is the full httpResponse from the server
+	fk.get('carsthatilike', (value) => { log(value) };
 
-	// Check that the value passed back is what we want
-	if(!cars) {
-		// Initialize the value
-		cars = {};
-		cars.tesla = "red";
-		cars.leaf = "blue";
-		cars.bolt = "green";
+	// Set a key
+	fk.set("hello", "world", () => { console.log("ALL DONE") );
 
-		// Set the value and reinitialize the cars variable
-		fk.set("cars", cars, () => {
-			cars = fk.init("cars");	
-		});
-	}
-
-	// After being pulled from the DB
-	log(cars);
+	// Delete a key
+	// Simply returns the deleted key name that was passed in
+	fk.del("hello", (key) => { console.log(key) };

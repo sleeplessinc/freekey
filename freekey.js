@@ -2,53 +2,43 @@
 // FREE KEY STORAGE INTERFACE
 
 const sleepless = require('sleepless'),
+	request = require('request'),
 	https = require('http');
 	https.post = require('https-post');
-
-
-function FreeKey(key, cb){
-   return get(key, res => {
-		console.log("RES: ", j2o(res));
-		return j2o(res);
-	});
-}
 
 function get(key, cb){
 	// Call URL GET
 	let url = "https://sleepless.com/api/v1/freekey/";
-	https.post(url, { action: "get", key: key, }, function(r) {
-		r.setEncoding('utf8');
-		r.on('data', chunk => {
-			if(chunk.value !== undefined) {
-				chunk.value = j2o(j2o(r.value));
-			}
-			cb(chunk);
-		});
+	request.post({url: url, form: { action: "get", key: key, }}, function(err, res, body) {
+		var val = "";
+		if(!err && body) {
+			body = j2o(body);
+			val = body.error == null ? body.value : body.error;
+		} else {
+			val = err;
+		}
+		cb(val, res);
 	});	
 }
 
 function set(key, val, cb){
 	// CALL URL SET
 	let url = "https://sleepless.com/api/v1/freekey/";
-	https.post(url, { action: "put", key: key, value: o2j(val)}, cb); 
+	request.post({url: url, form: { action: "put", key: key, value: o2j(val)} }, (err) => { cb(err) }); 
 }
 
 function del(key, cb){
 	// CALL URL DEL
 	let url = "https://sleepless.com/api/v1/freekey/";
-	https.post(url, { action: "delete", key: key}, (r) => {
-		r.setEncoding('utf8');	
-		r.on('data', chunk => {
-			if(chunk.value !== undefined) {
-				chunk.value = j2o(r.value);
-			}
-			cb(key, chunk);
-		});
+	request.post({url: url, form: { action: "delete", key: key} }, (err, res, body) => {
+		if(body.value !== undefined) {
+			body.value = j2o(body).value;
+		}
+		cb(key, body.value);
 	}); 
 }
 
 module.exports = {
-	init: FreeKey,
 	get: get,
 	set: set,
 	del: del

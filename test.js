@@ -1,32 +1,24 @@
-var fk = require('./freekey');
+const fk = require('./freekey');
 
-var posts = [{
-  "userId": 1,
-  "id": 1,
-  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-},{
-  "userId": 1,
-  "id": 1,
-  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-},{
-  "userId": 1,
-  "id": 1,
-  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-}]
-fk.set("posts_that_are_good", posts, ()=>{
-	fk.get("posts_that_are_good", (res) => {
-		posts = res;
-		log(posts);
-		//print(posts);	
-	});
+// Set a key, get same key, compare o2j(sent) and received
+// Delete previous key, do a get, get nothing back
+
+var obj = {}
+	
+obj.num = 42;
+obj.arr = [1,2,"3"];
+obj.sub = {hello: "world"};
+obj.str = "let's get freeky";
+
+fk.set("test_object", obj, () => {
+	fk.get("test_object", (value, res) => {
+		// Should be true
+		console.log("ARE OBJECTS SAME? ", value == o2j(obj));
+		fk.del("test_object", () => {
+			fk.get("test_object", (value, res) => {
+				// Should be null, after delete
+				console.log("DOES OBJECT HOLD VALUE? ", value);
+			})
+		});
+	})
 });
-
-function print(obj){
-	for(let i of Object.keys(obj)){
-		let k = obj[i];
-		log(i + ": ", k.id);
-	}
-}

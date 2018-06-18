@@ -6,9 +6,10 @@ const sleepless = require('sleepless'),
 	https.post = require('https-post');
 
 
-function FreeKey(key){
-	get(key, res => {
-		return res.value;
+function FreeKey(key, cb){
+   return get(key, res => {
+		console.log("RES: ", j2o(res));
+		return j2o(res);
 	});
 }
 
@@ -19,7 +20,7 @@ function get(key, cb){
 		r.setEncoding('utf8');
 		r.on('data', chunk => {
 			if(chunk.value !== undefined) {
-				chunk.value = j2o(r.value);
+				chunk.value = j2o(j2o(r.value));
 			}
 			cb(chunk);
 		});

@@ -40,9 +40,32 @@ function del(key, cb){
 	}); 
 }
 
+
+
+// this just returns the existing api, wrapped so that keys will always be prefixed with a string, so
+// I can do:
+//      fk = require("fk").prefix("sleepless_");
+//      fk.set("foo", "bar", ...)
+//      fk.get("foo", ...)
+// instead of:
+//      fk = require("fk");
+//      fk.set("sleepless_foo", "bar", ...)
+//      fk.get("sleepless_foo", ...)
+function prefix(pre) {
+	let o = module.exports;
+	return {
+		get: function(k, cb) { return o.get(pre+k, cb); },
+		put: function(k, v, cb) { return o.put(pre+k, v, cb); },
+		del: function(k, cb) { return o.del(pre+k, cb); },
+		prefix: function(pre) { return o.prefix(pre); }
+	};
+}
+
+
 module.exports = {
 	get: get,
 	put: put,
-	del: del
+	del: del,
+	prefix: prefix
 }
 

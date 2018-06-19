@@ -86,16 +86,18 @@ Values passed into put() and received from get() can be any JS entity that can b
 ## Easter Eggs
 
 
-Autoprefixing wrapper:
+### Autoprefixing wrapper:
 
-	fk_pre = fk.prefix("sleepless_");
+Allows you to transparently add a prefix to all your keys.
 
-	fk_pre.put("foo", 7, ... );			// auto-prefixes all keys with "sleepless_"
+	fk_pre = fk.prefix("Weird.randum-UnlikLEE,arbitrarey PREfXIXXX");
 
-	fk.get("sleepless_foo", ...);		// 7
+	fk_pre.put("foo", 7, ... );		// auto-prefixes all keys to provide a little "personal space"
+
+	fk_pre.get("foo", ... );		// 7
 
 
-Value encrypting wrapper:
+### Encrypting wrapper for values
 
 	fk_crypt = fk.crypt("top.secret.password");
 
@@ -106,4 +108,11 @@ Value encrypting wrapper:
 	fk_crypt = fk.crypt("wrong.password");
 
 	fk_crypt.get("foo", ...);		// error!
+
+
+### This actually works
+
+	fk_both = fk.crypt("top.secret.password").prefix("Weird.randum-UnlikLEE,arbitrarey PREfXIXXX");
+
+	fk_crypt.put("foo", "my secret stuff", ... );	// Stored encrypted with wacky key
 

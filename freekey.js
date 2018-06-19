@@ -42,6 +42,32 @@ function del(key, cb){
 
 
 
+// XXX this should really be an independent module that uses freekey, but whatever
+// Wrapper that encrypts the stored values
+function crypt(password, alg) {
+	const crypto = require("crypto");
+	const o = module.exports;
+	alg = alg || "aes-256-cbc";
+	return {
+		get: function(k, cb) {
+			return o.get(k, (enc)=> {
+				const d = crypto.createDecipher(alg, password);
+				let json = d.update(enc, "hex", "utf8") + d.final("utf8");;
+				cb(j2o(json));
+			});
+		},
+		put: function(k, v, cb) {
+			let json = o2j(v);
+			const c = crypto.createCipher(alg, password);
+			let enc = c.update(json, "utf8", "hex") + c.final("hex");;
+			return o.put(k, enc, cb);
+		},
+		del: o.del,
+		prefix: o.prefix
+	};
+}
+
+// XXX this should really be an independent module that uses freekey, but whatever
 // this just returns the existing api, wrapped so that keys will always be prefixed with a string, so
 // I can do:
 //      fk = require("fk").prefix("sleepless_");
@@ -57,7 +83,7 @@ function prefix(pre) {
 		get: function(k, cb) { return o.get(pre+k, cb); },
 		put: function(k, v, cb) { return o.put(pre+k, v, cb); },
 		del: function(k, cb) { return o.del(pre+k, cb); },
-		prefix: function(pre) { return o.prefix(pre); }
+		prefix: o.prefix
 	};
 }
 
@@ -66,6 +92,7 @@ module.exports = {
 	get: get,
 	put: put,
 	del: del,
+	crypt: crypt,
 	prefix: prefix
 }
 

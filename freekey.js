@@ -41,7 +41,6 @@ function del(key, cb){
 }
 
 
-
 // XXX this should really be an independent module that uses freekey, but whatever
 // Wrapper that encrypts the stored values
 // "alg" is optional encryption algorithm passed to node.js crypto module.
@@ -68,6 +67,7 @@ function crypt(password, alg) {
 		prefix: o.prefix
 	};
 }
+
 
 // XXX this should really be an independent module that uses freekey, but whatever
 // this just returns the existing api, wrapped so that keys will always be prefixed with a string, so

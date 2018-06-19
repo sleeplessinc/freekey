@@ -1,3 +1,5 @@
+// Copyright 2018 Sleepless Software Inc.  All Rights Reserved
+//
 // FREEKEY
 // FREE KEY STORAGE INTERFACE
 

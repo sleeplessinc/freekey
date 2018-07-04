@@ -1,15 +1,12 @@
 // Copyright 2018 Sleepless Software Inc.  All Rights Reserved
-//
-// FREEKEY
-// FREE KEY STORAGE INTERFACE
 
 const sleepless = require('sleepless'),
 	request = require('request'),
 	https = require('http');
 	https.post = require('https-post');
 
+
 function get(key, cb){
-	// Call URL GET
 	let url = "https://sleepless.com/api/v1/freekey/";
 	request.post({url: url, form: { action: "get", key: key, }}, function(err, res, body) {
 		var val = "";
@@ -25,14 +22,14 @@ function get(key, cb){
 	});	
 }
 
+
 function put(key, val, cb){
-	// CALL URL SET
 	let url = "https://sleepless.com/api/v1/freekey/";
 	request.post({url: url, form: { action: "put", key: key, value: o2j(val)} }, (err) => { cb(err) }); 
 }
 
+
 function del(key, cb){
-	// CALL URL DEL
 	let url = "https://sleepless.com/api/v1/freekey/";
 	request.post({url: url, form: { action: "delete", key: key} }, (err, res, body) => {
 		if(body.value !== undefined) {
@@ -43,9 +40,9 @@ function del(key, cb){
 }
 
 
-// XXX this should really be an independent module that uses freekey, but whatever
-// Wrapper that encrypts the stored values
+// Wrapper that encrypts the stored values.
 // "alg" is optional encryption algorithm passed to node.js crypto module.
+// default alg is "aes-256-cbc".
 function crypt(password, alg) {
 	const crypto = require("crypto");
 	const o = this;
@@ -71,9 +68,8 @@ function crypt(password, alg) {
 }
 
 
-// XXX this should really be an independent module that uses freekey, but whatever
-// this just returns the existing api, wrapped so that keys will always be prefixed with a string, so
-// I can do:
+// This returns the existing api, wrapped so that keys will always be prefixed with a string,
+// so you can do:
 //      fk = require("fk").prefix("sleepless_");
 //      fk.set("foo", "bar", ...)
 //      fk.get("foo", ...)

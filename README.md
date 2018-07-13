@@ -114,5 +114,5 @@ Allows you to transparently add a prefix to all your keys.
 
 	fk_both = fk.crypt("top.secret.password").prefix("Weird.randum-UnlikLEE,arbitrarey PREfXIXXX");
 
-	fk_crypt.put("foo", "my secret stuff", ... );	// Stored encrypted with wacky key
+	fk_both.put("foo", "my secret stuff", ... );	// Stored encrypted with wacky key
 

@@ -6,9 +6,10 @@ const sleepless = require('sleepless'),
 	https.post = require('https-post');
 
 
+let RESTPATH = "https://sleepless.com/api/v1/freekey/";
+
 function get(key, cb){
-	let url = "https://sleepless.com/api/v1/freekey/";
-	request.post({url: url, form: { action: "get", key: key, }}, function(err, res, body) {
+	request.post({url: RESTPATH, form: { action: "get", key: key, }}, function(err, res, body) {
 		var val = "";
 		var error = "";
 		if(!err && body) {
@@ -24,14 +25,12 @@ function get(key, cb){
 
 
 function put(key, val, cb){
-	let url = "https://sleepless.com/api/v1/freekey/";
-	request.post({url: url, form: { action: "put", key: key, value: o2j(val)} }, (err) => { cb(err) }); 
+	request.post({url: RESTPATH, form: { action: "put", key: key, value: o2j(val)} }, (err) => { cb(err) }); 
 }
 
 
 function del(key, cb){
-	let url = "https://sleepless.com/api/v1/freekey/";
-	request.post({url: url, form: { action: "delete", key: key} }, (err, res, body) => {
+	request.post({url: RESTPATH, form: { action: "delete", key: key} }, (err, res, body) => {
 		if(body.value !== undefined) {
 			body.value = j2o(body).value;
 		}
